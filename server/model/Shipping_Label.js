@@ -2,6 +2,14 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const shipping_label = new Schema({
+    date:{
+        type:Date, default : Date.now,
+    },
+    state:{
+        type:String,
+        enum:['active','inactive'],
+        default:'active',
+    },
     orderId: {
         type: String,
         default: "1112A10",
@@ -33,5 +41,5 @@ const shipping_label = new Schema({
 
 
 
-const Shipping_Label = mongoose.model(`${process.env.MONGO_DB_DATABASE}`, shipping_label);
+const Shipping_Label = mongoose.model(`${process.env.MONGO_DB_DATABASE_COLLECTION}`, shipping_label);
 module.exports = Shipping_Label;

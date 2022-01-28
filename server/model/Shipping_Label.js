@@ -2,13 +2,13 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const shipping_label = new Schema({
-    date:{
-        type:Date, default : Date.now,
+    date: {
+        type: Date, default: Date.now,
     },
-    state:{
-        type:String,
-        enum:['active','inactive'],
-        default:'active',
+    state: {
+        type: String,
+        enum: ['active', 'inactive'],
+        default: 'active',
     },
     orderId: {
         type: String,

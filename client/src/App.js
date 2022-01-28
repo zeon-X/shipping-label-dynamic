@@ -1,139 +1,94 @@
 import './App.css';
 import Axios from 'axios';
-import React, { useState } from 'react';
+import { React, useState, useEffect } from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
-// import '../node_modules/bootstrap/dist/js/bootstrap.min.js';
+// import labelForm from './elements/labelForm';
 
 function App() {
-  const [orderId, setOrderId] = useState("");
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [address, setAddress] = useState("");
-  const [productDetails, setProductDetails] = useState("");
-
-  const [productPrice, setProductPrice] = useState(0);
-  const [deliveryCharge, setDeliveryCharge] = useState(0);
-  const [totalCost, setTotalCost] = useState(0);
-
-
-  const entryToDatabase = () => {
-    //console.log(name + address);
-    Axios.post("http://localhost:3001/label/entry",{
-      OI : orderId,
-      N : name,
-      P : phone,
-      A : address,
-      PD : productDetails,
-      PP : productPrice,
-      DC : deliveryCharge,
-      TC : totalCost,
+  const [shippingLabel, setShippingLabel] = useState([]);
+  useEffect(() => {
+    Axios.get('http://localhost:3001/label/display').then((response) => {
+      setShippingLabel(response.data);
+      console.log(response.data);
     });
-  };
-
+  }, []);
 
 
   return (
+    // <Router>
+    //   <Switch>
+    //     <Route exact path="/label/entry" element={labelForm} />
+    //     <Route exact path="/label/display" element={labelForm} />
+    //   </Switch>
+    // </Router>
 
-    <div className="App">
+    <div style={{ display: "flex", flexWrap: "wrap", }}>
+      {shippingLabel.map((value, key) => {
+        return (
 
-      <div className="w-100 d-flex flex-column align-items-center ">
-        <section className=" container d-flex flex-column align-items-center justify-content-center">
-          <p className="pt-5 pb-3 text-center fs-4 fw-bold">Shipping Label Form</p>
+          <div style={{ display: "flex", flexWrap: " wrap", }}>
+            <div style={{ margin: " 10px", backgroundColor: " white", border: " solid 3px black", width: " 300px", display: " flex", flexDirection: " column", justifyContent: " center", alignItems: "center", }}>
 
-          <form className="w-100 d-flex justify-content-center  shadow mb-5">
-            <div className="w-50 mb-5">
-
-              <p className="py-4">Customer Information</p>
-
-              <div class="form-floating mb-3 me-5">
-                <input type="text"
-                  onChange={(event) => {
-                    setOrderId(event.target.value);
-                  }}
-                  class="form-control" id="orderId" placeholder="a" />
-                <label for="orderId">Order Id</label>
+              <img src={require('./elements/img/Picture8.png')} style={{ backgroundColor: " black", width: " 300px", }} />
+              <div style={{ display: "flex", width: " 90%", marginTop: "10px" }}>
+                <p style={{ width: " 60%" }}>
+                  Order Id<br />
+                  Name<br />
+                  Phone<br />
+                  Address<br />
+                </p>
+                <p> : {value.orderId}<br />
+                  : {value.name}<br />
+                  <b>: {value.phone} </b><br />
+                  : {value.address}<br />
+                </p>
               </div>
 
-              <div class="form-floating mb-3 me-5">
-                <input type="text"
-                  onChange={(event) => {
-                    setName(event.target.value);
-                  }}
-                  class="form-control" id="name" placeholder="a" />
-                <label for="name">Name</label>
+              <div style={{ display: " flex", width: " 90%", }}>
+                <p style={{ width: " 30%", margin: " 0", }}>Product Details </p>
+                <p style={{ margin: " 0", }}> : {value.product_details}</p>
               </div>
 
-              <div class="form-floating mb-3 me-5">
-                <input type="text"
-                  onChange={(event) => {
-                    setPhone(event.target.value);
-                  }}
-                  class="form-control" id="phone" placeholder="a" />
-                <label for="phone">Phone</label>
+              <div style={{ width: " 90%", }}>
+                <h3 style={{ marginBottom: " 0", }}>Payment Details</h3>
+                <hr />
               </div>
 
-              <div class="form-floating mb-3 me-5">
-                <input type="text"
-                  onChange={(event) => {
-                    setAddress(event.target.value);
-                  }}
-                  class="form-control" id="address" placeholder="a" />
-                <label for="address">Address</label>
+              <div style={{ display: " flex", width: " 90%", }}>
+                <p style={{ width: " 50%", }}>
+                  <span>Product Price</span><br />
+                  <span>Delivery Charge</span><br />
+                  <span><b>Total Cost</b></span><br />
+                </p>
+
+                <p> <span>: BDT {value.price}</span><br />
+                  <span>: BDT {value.delivery_cost}</span><br />
+                  <span>: <b>BDT {value.total_cost}</b></span><br />
+                </p>
               </div>
 
-              <div class="form-floating mb-3 me-5">
-                <input type="text"
-                  onChange={(event) => {
-                    setProductDetails(event.target.value);
-                  }}
-                  class="form-control" id="product_details" placeholder="a" />
-                <label for="product_details">Product Details</label>
+              <div style={{ display: " flex", width: " 90%", }}>
+                <img src={require('./elements/img/barcode.png.gif')} style={{ padding: " 5px", }} />
+                <img src={require('./elements/img/qr.png')} style={{ width: " 60px", height: " 60px", marginLeft: " 30px", }} />
               </div>
+
+              <div style={{ width: " 90%", display: " flex", justifyContent: " center", }}>
+                <p style={{ fontSize: " 10px", paddingTop: " 10px", }}>Thanks for shopping with HomeDecorbd</p>
+              </div>
+
 
             </div>
+          </div>
+        );
 
-
-            <div className="w-25  mb-5">
-              <p className="py-4">Payment Information</p>
-
-              <div class="form-floating mb-3">
-                <input type="number"
-                  onChange={(event) => {
-                    setProductPrice(event.target.value);
-                  }}
-                  class="form-control" id="price" placeholder="a" />
-                <label for="price">Product Price</label>
-              </div>
-              <div class="form-floating mb-3">
-                <input type="number"
-                  onChange={(event) => {
-                    setDeliveryCharge(event.target.value);
-                  }}
-                  class="form-control" id="delivery_cost" placeholder="a" />
-                <label for="delivery_cost">Delivery Charge</label>
-              </div>
-              <div class="form-floating mb-3">
-                <input type="number"
-                  onChange={(event) => {
-                    setTotalCost(event.target.value);
-                  }}
-                  class="form-control" id="total_cost" placeholder="a" />
-                <label for="total_cost">Total Cost</label>
-              </div>
-
-
-
-              <button onClick={entryToDatabase} type="button" id="entry_btn" className="btn btn-dark text-white px-5 my-4">Entry to Database</button>
-            </div>
-
-
-          </form>
-
-
-        </section>
-      </div>
-
+      })}
     </div>
+
+
+
+
+
   );
 }
 

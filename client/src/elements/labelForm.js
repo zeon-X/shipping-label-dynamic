@@ -33,6 +33,10 @@ export const LabelForm = () => {
         document.getElementById("myForm").reset();
     };
 
+    const resetForm = () => {
+        document.getElementById("myForm").reset();
+    };
+
     return (
         <div className="w-100 d-flex flex-column align-items-center ">
             <section className=" container d-flex flex-column align-items-center justify-content-center">
@@ -121,7 +125,8 @@ export const LabelForm = () => {
 
 
 
-                        <button onClick={entryToDatabase} type="button" id="entry_btn" className="btn btn-dark text-white px-5 my-4">Entry to Database</button>
+                        <button onClick={entryToDatabase} type="button" id="entry_btn" className="btn btn-success text-white px-5 mt-4 mb-1">Entry to Database</button>
+                        <button onClick={resetForm} type="button" id="reset_btn" className="btn btn-danger text-white  mb-4 mt-1" style={{ paddingLeft: '71px', paddingRight: '71px' }}>Reset Form</button>
                     </div>
 
 

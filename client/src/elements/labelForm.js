@@ -1,8 +1,11 @@
 import Axios from 'axios';
+// import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+
+
 import React, { useState } from 'react';
 
 
-export default function labelForm() {
+export const LabelForm = () => {
     const [orderId, setOrderId] = useState("");
     const [name, setName] = useState("");
     const [phone, setPhone] = useState("");
@@ -16,7 +19,7 @@ export default function labelForm() {
 
     const entryToDatabase = () => {
         //console.log(name + address);
-        Axios.post("http://localhost:3001/label/entry", {
+        Axios.post("http://localhost:5000/label/entry", {
             OI: orderId,
             N: name,
             P: phone,
@@ -26,6 +29,8 @@ export default function labelForm() {
             DC: deliveryCharge,
             TC: totalCost,
         });
+
+        document.getElementById("myForm").reset();
     };
 
     return (
@@ -33,7 +38,7 @@ export default function labelForm() {
             <section className=" container d-flex flex-column align-items-center justify-content-center">
                 <p className="pt-5 pb-3 text-center fs-4 fw-bold">Shipping Label Form</p>
 
-                <form className="w-100 d-flex justify-content-center  shadow mb-5">
+                <form id="myForm" className=" w-100 d-flex justify-content-center  shadow mb-5">
                     <div className="w-50 mb-5">
 
                         <p className="py-4">Customer Information</p>
